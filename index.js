@@ -1,19 +1,22 @@
-function combinationSum2(candidates, target) {
-  candidates.sort((a, b) => a - b);
-  const result = [];
-  backtrack([], 0, 0);
-  return result;
-  function backtrack(combination, start, sum) {
-    if (sum === target) {
-      result.push([...combination]);
-      return;
-    }
-    if (sum > target) return;
-    for (let i = start; i < candidates.length; i++) {
-      if (i > start && candidates[i] === candidates[i - 1]) continue;
-      combination.push(candidates[i]);
-      backtrack(combination, i + 1, sum + candidates[i]);
-      combination.pop();
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr;
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
+function merge(left, right) {
+  let result = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex]) {
+      result.push(left[leftIndex]);
+      leftIndex++;
+    } else {
+      result.push(right[rightIndex]);
+      rightIndex++;
     }
   }
+  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
 }
