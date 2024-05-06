@@ -1,22 +1,26 @@
-function mergeSort(arr) {
-  if (arr.length <= 1) return arr;
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid));
-  const right = mergeSort(arr.slice(mid));
-  return merge(left, right);
-}
-function merge(left, right) {
-  let result = [];
-  let leftIndex = 0;
-  let rightIndex = 0;
-  while (leftIndex < left.length && rightIndex < right.length) {
-    if (left[leftIndex] < right[rightIndex]) {
-      result.push(left[leftIndex]);
-      leftIndex++;
-    } else {
-      result.push(right[rightIndex]);
-      rightIndex++;
+function letterCombinations(digits) {
+  if (digits.length === 0) return [];
+  const map = {
+    2: "abc",
+    3: "def",
+    4: "ghi",
+    5: "jkl",
+    6: "mno",
+    7: "pqrs",
+    8: "tuv",
+    9: "wxyz",
+  };
+  const result = [];
+  backtrack("", digits);
+  return result;
+  function backtrack(combination, nextDigits) {
+    if (nextDigits.length === 0) result.push(combination);
+    else {
+      const digit = nextDigits.substring(0, 1);
+      const letters = map[digit];
+      for (const letter of letters) {
+        backtrack(combination + letter, nextDigits.substring(1));
+      }
     }
   }
-  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
 }
